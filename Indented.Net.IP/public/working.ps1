@@ -13,6 +13,11 @@ class IPv4Network {
     [String]$Class
     [Bool]$IsPrivate
 
+    # Constructors:
+    # Parameterless Constructor
+    IPv4Network() {
+    }
+
     # Constructor with CIDR Notation
     IPv4Network([String]$Network){
         $temp = Get-NetworkSummary -IPAddress $Network
@@ -49,6 +54,23 @@ class IPv4Network {
         $this.IsPrivate = $temp.IsPrivate
     }
 
+    # Constructor with IP and Subnet Mask as strings
+    IPv4Network([String]$IPAddress, [String]$Mask){
+        $temp = Get-NetworkSummary -IPAddress $IPAddress -SubnetMask $Mask
+        $this.NetworkAddress = $temp.NetworkAddress
+        $this.NetworkDecimal = $temp.NetworkDecimal
+        $this.BroadcastAddress  =$temp.BroadcastAddress 
+        $this.BroadcastDecimal  =$temp.BroadcastDecimal 
+        $this.Mask = $temp.Mask
+        $this.MaskLength  =$temp.MaskLength 
+        $this.MaskHexadecimal = $temp.MaskHexadecimal
+        $this.CIDRNotation = $temp.CIDRNotation
+        $this.HostRange = $temp.HostRange
+        $this.NumberOfAddresses = $temp.NumberOfAddresses
+        $this.NumberOfHosts  =$temp.NumberOfHosts 
+        $this.Class = $temp.Class
+        $this.IsPrivate = $temp.IsPrivate
+    }
     # Constructor with IP address and mask length
     IPv4Network([IPAddress]$IPAddress, [Int]$MaskLength){
         $temp = Get-NetworkSummary -IPAddress $IPAddress -SubnetMask (ConvertTo-Mask -MaskLength $MaskLength)
@@ -67,16 +89,34 @@ class IPv4Network {
         $this.IsPrivate = $temp.IsPrivate
     }
 
+   # Constructor with IP address, as string, and mask length
+   IPv4Network([String]$IPAddress, [Int]$MaskLength){
+    $temp = Get-NetworkSummary -IPAddress $IPAddress -SubnetMask (ConvertTo-Mask -MaskLength $MaskLength)
+    $this.NetworkAddress = $temp.NetworkAddress
+    $this.NetworkDecimal = $temp.NetworkDecimal
+    $this.BroadcastAddress  =$temp.BroadcastAddress 
+    $this.BroadcastDecimal  =$temp.BroadcastDecimal 
+    $this.Mask = $temp.Mask
+    $this.MaskLength  =$temp.MaskLength 
+    $this.MaskHexadecimal = $temp.MaskHexadecimal
+    $this.CIDRNotation = $temp.CIDRNotation
+    $this.HostRange = $temp.HostRange
+    $this.NumberOfAddresses = $temp.NumberOfAddresses
+    $this.NumberOfHosts  =$temp.NumberOfHosts 
+    $this.Class = $temp.Class
+    $this.IsPrivate = $temp.IsPrivate
+}
+
     # Addition Method
     static [IPv4Network]op_Addition([IPv4Network]$Address, [Int]$Operand) {
         $IP = [IPv4Address]::New($Address.BroadcastAddress,$Address.MaskLength)
-        $IP = $IP + [Int]([System.Math]::Pow(2,32 - $IP.Network.NetworkBits) * $Operand)
+        $IP = $IP + [Int]([System.Math]::Pow(2,32 - $IP.Network.MaskLength) * $Operand)
         return [IPv4Network]::New([IPAddress]$IP.IPAddress,[IPAddress]$Address.Mask)
     }
     # Subtraction Method
     static [IPv4Network]op_Subtraction([IPv4Network]$Address, [Int]$Operand) {
         $IP = [IPv4Address]::New($Address.BroadcastAddress,$Address.MaskLength)
-        $IP = $IP - [Int]([System.Math]::Pow(2,32 - $IP.Network.NetworkBits) * $Operand)
+        $IP = $IP - [Int]([System.Math]::Pow(2,32 - $IP.Network.MaskLength) * $Operand)
         return [IPv4Network]::New([IPAddress]$IP.IPAddress,[IPAddress]$Address.Mask)
     }
 }
@@ -98,15 +138,27 @@ class IPv4Address {
     }
 
     # Constructor with IP and Subnet Mask
-    IPv4Address([String]$IPAddress, [String]$Mask){
+    IPv4Address([IPAddress]$IPAddress, [IPAddress]$Mask){
         $this.IPAddress = [IPAddress]$IPAddress
-        $this.Network = [IPv4Network]::New($IPAddress,$Mask)
+        $this.Network = [IPv4Network]::New([IPAddress]$IPAddress,[IPAddress]$Mask)
     }
 
+    # Constructor with IP and Subnet Mask as strings
+    IPv4Address([String]$IPAddress, [String]$Mask){
+        $this.IPAddress = [IPAddress]$IPAddress
+        $this.Network = [IPv4Network]::New([IPAddress]$IPAddress,[IPAddress]$Mask)
+    }
+    
     # Constructor with IP Address and Mask Length
     IPv4Address([IPAddress]$IPAddress, [Int]$MaskLength){
         $this.IPAddress = [IPAddress]$IPAddress
-        $this.Network = [IPv4Network]::New($IPAddress,$MaskLength)
+        $this.Network = [IPv4Network]::New([IPAddress]$IPAddress,[Int]$MaskLength)
+    }
+
+    # Constructor with IP Address, as string, and Mask Length
+    IPv4Address([String]$IPAddress, [Int]$MaskLength){
+        $this.IPAddress = [IPAddress]$IPAddress
+        $this.Network = [IPv4Network]::New([IPAddress]$IPAddress,[Int]$MaskLength)
     }
 
     # Addition Method
