@@ -23,15 +23,15 @@ class IPv4Network {
         $temp = Get-NetworkSummary -IPAddress $Network
         $this.NetworkAddress = $temp.NetworkAddress
         $this.NetworkDecimal = $temp.NetworkDecimal
-        $this.BroadcastAddress  =$temp.BroadcastAddress 
-        $this.BroadcastDecimal  =$temp.BroadcastDecimal 
+        $this.BroadcastAddress = $temp.BroadcastAddress 
+        $this.BroadcastDecimal = $temp.BroadcastDecimal 
         $this.Mask = $temp.Mask
-        $this.MaskLength  =$temp.MaskLength 
+        $this.MaskLength = $temp.MaskLength 
         $this.MaskHexadecimal = $temp.MaskHexadecimal
         $this.CIDRNotation = $temp.CIDRNotation
         $this.HostRange = $temp.HostRange
         $this.NumberOfAddresses = $temp.NumberOfAddresses
-        $this.NumberOfHosts  =$temp.NumberOfHosts 
+        $this.NumberOfHosts = $temp.NumberOfHosts 
         $this.Class = $temp.Class
         $this.IsPrivate = $temp.IsPrivate
     }
@@ -41,15 +41,15 @@ class IPv4Network {
         $temp = Get-NetworkSummary -IPAddress $IPAddress -SubnetMask $Mask
         $this.NetworkAddress = $temp.NetworkAddress
         $this.NetworkDecimal = $temp.NetworkDecimal
-        $this.BroadcastAddress  =$temp.BroadcastAddress 
-        $this.BroadcastDecimal  =$temp.BroadcastDecimal 
+        $this.BroadcastAddress = $temp.BroadcastAddress 
+        $this.BroadcastDecimal = $temp.BroadcastDecimal 
         $this.Mask = $temp.Mask
-        $this.MaskLength  =$temp.MaskLength 
+        $this.MaskLength = $temp.MaskLength 
         $this.MaskHexadecimal = $temp.MaskHexadecimal
         $this.CIDRNotation = $temp.CIDRNotation
         $this.HostRange = $temp.HostRange
         $this.NumberOfAddresses = $temp.NumberOfAddresses
-        $this.NumberOfHosts  =$temp.NumberOfHosts 
+        $this.NumberOfHosts = $temp.NumberOfHosts 
         $this.Class = $temp.Class
         $this.IsPrivate = $temp.IsPrivate
     }
@@ -59,15 +59,15 @@ class IPv4Network {
         $temp = Get-NetworkSummary -IPAddress $IPAddress -SubnetMask $Mask
         $this.NetworkAddress = $temp.NetworkAddress
         $this.NetworkDecimal = $temp.NetworkDecimal
-        $this.BroadcastAddress  =$temp.BroadcastAddress 
-        $this.BroadcastDecimal  =$temp.BroadcastDecimal 
+        $this.BroadcastAddress = $temp.BroadcastAddress 
+        $this.BroadcastDecimal = $temp.BroadcastDecimal 
         $this.Mask = $temp.Mask
-        $this.MaskLength  =$temp.MaskLength 
+        $this.MaskLength = $temp.MaskLength 
         $this.MaskHexadecimal = $temp.MaskHexadecimal
         $this.CIDRNotation = $temp.CIDRNotation
         $this.HostRange = $temp.HostRange
         $this.NumberOfAddresses = $temp.NumberOfAddresses
-        $this.NumberOfHosts  =$temp.NumberOfHosts 
+        $this.NumberOfHosts = $temp.NumberOfHosts 
         $this.Class = $temp.Class
         $this.IsPrivate = $temp.IsPrivate
     }
@@ -76,15 +76,15 @@ class IPv4Network {
         $temp = Get-NetworkSummary -IPAddress $IPAddress -SubnetMask (ConvertTo-Mask -MaskLength $MaskLength)
         $this.NetworkAddress = $temp.NetworkAddress
         $this.NetworkDecimal = $temp.NetworkDecimal
-        $this.BroadcastAddress  =$temp.BroadcastAddress 
-        $this.BroadcastDecimal  =$temp.BroadcastDecimal 
+        $this.BroadcastAddress = $temp.BroadcastAddress 
+        $this.BroadcastDecimal = $temp.BroadcastDecimal 
         $this.Mask = $temp.Mask
-        $this.MaskLength  =$temp.MaskLength 
+        $this.MaskLength = $temp.MaskLength 
         $this.MaskHexadecimal = $temp.MaskHexadecimal
         $this.CIDRNotation = $temp.CIDRNotation
         $this.HostRange = $temp.HostRange
         $this.NumberOfAddresses = $temp.NumberOfAddresses
-        $this.NumberOfHosts  =$temp.NumberOfHosts 
+        $this.NumberOfHosts = $temp.NumberOfHosts 
         $this.Class = $temp.Class
         $this.IsPrivate = $temp.IsPrivate
     }
@@ -94,18 +94,22 @@ class IPv4Network {
     $temp = Get-NetworkSummary -IPAddress $IPAddress -SubnetMask (ConvertTo-Mask -MaskLength $MaskLength)
     $this.NetworkAddress = $temp.NetworkAddress
     $this.NetworkDecimal = $temp.NetworkDecimal
-    $this.BroadcastAddress  =$temp.BroadcastAddress 
-    $this.BroadcastDecimal  =$temp.BroadcastDecimal 
+    $this.BroadcastAddress = $temp.BroadcastAddress 
+    $this.BroadcastDecimal = $temp.BroadcastDecimal 
     $this.Mask = $temp.Mask
-    $this.MaskLength  =$temp.MaskLength 
+    $this.MaskLength = $temp.MaskLength 
     $this.MaskHexadecimal = $temp.MaskHexadecimal
     $this.CIDRNotation = $temp.CIDRNotation
     $this.HostRange = $temp.HostRange
     $this.NumberOfAddresses = $temp.NumberOfAddresses
-    $this.NumberOfHosts  =$temp.NumberOfHosts 
+    $this.NumberOfHosts = $temp.NumberOfHosts 
     $this.Class = $temp.Class
     $this.IsPrivate = $temp.IsPrivate
 }
+
+    [Array]NetworkRange() {
+        return ,(Get-NetworkRange -IPAddress $this.CIDRNotation)
+    }
 
     # Addition Method
     static [IPv4Network]op_Addition([IPv4Network]$Address, [Int]$Operand) {
