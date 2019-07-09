@@ -20,92 +20,47 @@ class IPv4Network {
 
     # Constructor with CIDR Notation
     IPv4Network([String]$Network){
-        $temp = Get-NetworkSummary -IPAddress $Network
-        $this.NetworkAddress = $temp.NetworkAddress
-        $this.NetworkDecimal = $temp.NetworkDecimal
-        $this.BroadcastAddress = $temp.BroadcastAddress 
-        $this.BroadcastDecimal = $temp.BroadcastDecimal 
-        $this.Mask = $temp.Mask
-        $this.MaskLength = $temp.MaskLength 
-        $this.MaskHexadecimal = $temp.MaskHexadecimal
-        $this.CIDRNotation = $temp.CIDRNotation
-        $this.HostRange = $temp.HostRange
-        $this.NumberOfAddresses = $temp.NumberOfAddresses
-        $this.NumberOfHosts = $temp.NumberOfHosts 
-        $this.Class = $temp.Class
-        $this.IsPrivate = $temp.IsPrivate
+        $Temp = Get-NetworkSummary -IPAddress $Network
+        $Properties = Get-Member -InputObject $Temp -MemberType NoteProperty
+        foreach ($p in $Properties) { 
+            $this.($p.Name) = $Temp.$($p.Name)
+        }
     }
 
     # Constructor with IP and Subnet Mask
     IPv4Network([IPAddress]$IPAddress, [IPAddress]$Mask){
-        $temp = Get-NetworkSummary -IPAddress $IPAddress -SubnetMask $Mask
-        $this.NetworkAddress = $temp.NetworkAddress
-        $this.NetworkDecimal = $temp.NetworkDecimal
-        $this.BroadcastAddress = $temp.BroadcastAddress 
-        $this.BroadcastDecimal = $temp.BroadcastDecimal 
-        $this.Mask = $temp.Mask
-        $this.MaskLength = $temp.MaskLength 
-        $this.MaskHexadecimal = $temp.MaskHexadecimal
-        $this.CIDRNotation = $temp.CIDRNotation
-        $this.HostRange = $temp.HostRange
-        $this.NumberOfAddresses = $temp.NumberOfAddresses
-        $this.NumberOfHosts = $temp.NumberOfHosts 
-        $this.Class = $temp.Class
-        $this.IsPrivate = $temp.IsPrivate
+        $Temp = Get-NetworkSummary -IPAddress $IPAddress -SubnetMask $Mask
+        $Properties = Get-Member -InputObject $Temp -MemberType NoteProperty
+        foreach ($p in $Properties) { 
+            $this.($p.Name) = $Temp.$($p.Name)
+        }
     }
 
     # Constructor with IP and Subnet Mask as strings
     IPv4Network([String]$IPAddress, [String]$Mask){
-        $temp = Get-NetworkSummary -IPAddress $IPAddress -SubnetMask $Mask
-        $this.NetworkAddress = $temp.NetworkAddress
-        $this.NetworkDecimal = $temp.NetworkDecimal
-        $this.BroadcastAddress = $temp.BroadcastAddress 
-        $this.BroadcastDecimal = $temp.BroadcastDecimal 
-        $this.Mask = $temp.Mask
-        $this.MaskLength = $temp.MaskLength 
-        $this.MaskHexadecimal = $temp.MaskHexadecimal
-        $this.CIDRNotation = $temp.CIDRNotation
-        $this.HostRange = $temp.HostRange
-        $this.NumberOfAddresses = $temp.NumberOfAddresses
-        $this.NumberOfHosts = $temp.NumberOfHosts 
-        $this.Class = $temp.Class
-        $this.IsPrivate = $temp.IsPrivate
+        $Temp = Get-NetworkSummary -IPAddress $IPAddress -SubnetMask $Mask
+        $Properties = Get-Member -InputObject $Temp -MemberType NoteProperty
+        foreach ($p in $Properties) { 
+            $this.($p.Name) = $Temp.$($p.Name)
+        }
     }
     # Constructor with IP address and mask length
     IPv4Network([IPAddress]$IPAddress, [Int]$MaskLength){
-        $temp = Get-NetworkSummary -IPAddress $IPAddress -SubnetMask (ConvertTo-Mask -MaskLength $MaskLength)
-        $this.NetworkAddress = $temp.NetworkAddress
-        $this.NetworkDecimal = $temp.NetworkDecimal
-        $this.BroadcastAddress = $temp.BroadcastAddress 
-        $this.BroadcastDecimal = $temp.BroadcastDecimal 
-        $this.Mask = $temp.Mask
-        $this.MaskLength = $temp.MaskLength 
-        $this.MaskHexadecimal = $temp.MaskHexadecimal
-        $this.CIDRNotation = $temp.CIDRNotation
-        $this.HostRange = $temp.HostRange
-        $this.NumberOfAddresses = $temp.NumberOfAddresses
-        $this.NumberOfHosts = $temp.NumberOfHosts 
-        $this.Class = $temp.Class
-        $this.IsPrivate = $temp.IsPrivate
+        $Temp = Get-NetworkSummary -IPAddress $IPAddress -SubnetMask (ConvertTo-Mask -MaskLength $MaskLength)
+        $Properties = Get-Member -InputObject $Temp -MemberType NoteProperty
+        foreach ($p in $Properties) { 
+            $this.($p.Name) = $Temp.$($p.Name)
+        }
     }
 
    # Constructor with IP address, as string, and mask length
    IPv4Network([String]$IPAddress, [Int]$MaskLength){
-    $temp = Get-NetworkSummary -IPAddress $IPAddress -SubnetMask (ConvertTo-Mask -MaskLength $MaskLength)
-    $this.NetworkAddress = $temp.NetworkAddress
-    $this.NetworkDecimal = $temp.NetworkDecimal
-    $this.BroadcastAddress = $temp.BroadcastAddress 
-    $this.BroadcastDecimal = $temp.BroadcastDecimal 
-    $this.Mask = $temp.Mask
-    $this.MaskLength = $temp.MaskLength 
-    $this.MaskHexadecimal = $temp.MaskHexadecimal
-    $this.CIDRNotation = $temp.CIDRNotation
-    $this.HostRange = $temp.HostRange
-    $this.NumberOfAddresses = $temp.NumberOfAddresses
-    $this.NumberOfHosts = $temp.NumberOfHosts 
-    $this.Class = $temp.Class
-    $this.IsPrivate = $temp.IsPrivate
-}
+        $Temp = Get-NetworkSummary -IPAddress $IPAddress -SubnetMask (ConvertTo-Mask -MaskLength $MaskLength)
+        $Properties = Get-Member -InputObject $Temp -MemberType NoteProperty
+        foreach ($p in $Properties) { 
+            $this.($p.Name) = $Temp.$($p.Name)
+        }
+    }
 
     [Array]NetworkRange() {
         return ,(Get-NetworkRange -IPAddress $this.CIDRNotation)
