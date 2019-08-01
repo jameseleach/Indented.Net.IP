@@ -2,7 +2,7 @@
 Forked from https://github.com/indented-automation/Indented.Net.IP
 
 ### This is a work in progress, extending on Indented.Net.IP, by the use of PowerShell Classes
-Added functionality:
+Example of additional functionality:
 ```
 PS D:\> $Network = New-IPv4Network 24.173.29.77/29 
 PS D:\> $Network | Get-Member
