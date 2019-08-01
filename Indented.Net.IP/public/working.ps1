@@ -150,13 +150,25 @@ function New-IPv4Network {
     [CmdletBinding()]
     [OutputType('IPv4Network')]
     param (
-        
+        # Either a literal IP address, a network range expressed as CIDR notation, or an IP address and subnet mask in a string.
+        [Parameter(Mandatory, Position = 1, ValueFromPipeline)]
+        [String]$IPAddress,
+
+        # A subnet mask as an IP address.
+        [Parameter(Position = 2)]
+        [String]$SubnetMask
     )
     
     begin {
     }
     
     process {
+        try {
+            $Network = ConvertToNetwork @psboundparameters
+        } catch {
+            throw $_
+        }
+        return ([IPv4Network]::New($Network.IPAddress,$Network.SubnetMask))
     }
     
     end {
