@@ -1,4 +1,55 @@
 # Indented.Net.IP
+Forked from https://github.com/indented-automation/Indented.Net.IP
+
+### This is a work in progress, extending on Indented.Net.IP, by the use of PowerShell Classes
+Example of additional functionality:
+```
+PS D:\> $Network = New-IPv4Network 24.173.29.77/29 
+PS D:\> $Network | Get-Member
+
+   TypeName: IPv4Network
+
+Name              MemberType Definition
+----              ---------- ----------
+Equals            Method     bool Equals(System.Object obj)
+GetHashCode       Method     int GetHashCode()
+GetType           Method     type GetType()
+NetworkRange      Method     array NetworkRange()
+ToString          Method     string ToString()
+BroadcastAddress  Property   ipaddress BroadcastAddress {get;set;}
+BroadcastDecimal  Property   uint32 BroadcastDecimal {get;set;}
+CIDRNotation      Property   string CIDRNotation {get;set;}
+Class             Property   string Class {get;set;}
+HostRange         Property   string HostRange {get;set;}
+IsPrivate         Property   bool IsPrivate {get;set;}
+Mask              Property   ipaddress Mask {get;set;}
+MaskHexadecimal   Property   string MaskHexadecimal {get;set;}
+MaskLength        Property   int MaskLength {get;set;}
+NetworkAddress    Property   ipaddress NetworkAddress {get;set;}
+NetworkDecimal    Property   uint32 NetworkDecimal {get;set;}
+NumberOfAddresses Property   uint32 NumberOfAddresses {get;set;}  
+NumberOfHosts     Property   uint32 NumberOfHosts {get;set;}
+
+PS D:\> ($Network + 1).NetworkAddress.IPAddressToString
+24.173.29.80
+
+PS D:\> $Network.NetworkRange().IPAddressToString
+24.173.29.73
+24.173.29.74
+24.173.29.75
+24.173.29.76
+24.173.29.77
+24.173.29.78
+
+PS D:\> $Address = New-IPv4Address 192.198.100.222 255.255.255.0                
+PS D:\> $Address
+
+IPAddress       Network    
+---------       -------
+192.198.100.222 IPv4Network
+```
+
+### Original README.md follows
 
 [![Build status](https://ci.appveyor.com/api/projects/status/u09nudqyvm1nbp6k?svg=true)](https://ci.appveyor.com/project/indented-automation/indented-net-ip)
 
