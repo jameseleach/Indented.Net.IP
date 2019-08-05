@@ -1,3 +1,12 @@
+$classes = @(
+    'IPv4Network'
+    'IPv4Address'
+)
+
+foreach ($file in $classes) {
+    . ("{0}\classes\{1}.ps1" -f $psscriptroot, $file)
+}
+
 $private = @(
     'ConvertToNetwork'
     'GetPermutation'
