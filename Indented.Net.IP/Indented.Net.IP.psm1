@@ -1,6 +1,7 @@
 $private = @(
     'ConvertToNetwork'
     'GetPermutation'
+    'IPv4Classes'
 )
 
 foreach ($file in $private) {
@@ -23,6 +24,8 @@ $public = @(
     'Get-Subnet'
     'Resolve-IPAddress'
     'Test-SubnetMember'
+    'New-IPv4Network'
+    'New-IPv4Address'
 )
 
 foreach ($file in $public) {
@@ -45,6 +48,8 @@ $functionsToExport = @(
     'Get-Subnet'
     'Resolve-IPAddress'
     'Test-SubnetMember'
+    'New-IPv4Address'
+    'New-IPv4Network'
 )
 Export-ModuleMember -Function $functionsToExport
 
