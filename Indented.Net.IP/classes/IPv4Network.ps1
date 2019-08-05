@@ -66,16 +66,15 @@ class IPv4Network {
         return ,(Get-NetworkRange -IPAddress $this.CIDRNotation)
     }
 
+    # ConvertTo-DottedDecimalIP -IPAddress ((ConvertTo-DecimalIP -IPAddress $Address.IPAddress) + $Operand)
     # Addition Method
-    static [IPv4Network]op_Addition([IPv4Network]$Address, [Int]$Operand) {
-        $IP = [IPv4Address]::New($Address.BroadcastAddress,$Address.MaskLength)
-        $IP = $IP + [Int]([System.Math]::Pow(2,32 - $IP.Network.MaskLength) * $Operand)
-        return [IPv4Network]::New([IPAddress]$IP.IPAddress,[IPAddress]$Address.Mask)
+    static [IPv4Network]op_Addition([IPv4Network]$Network, [Int]$Operand) {
+        [IPAddress]$IP = ConvertTo-DottedDecimalIP -IPAddress ((ConvertTo-DecimalIP -IPAddress $Network.NetworkAddress) + $Network.NumberOfAddresses * $Operand)
+        return [IPv4Network]::New([String]$IP.IPAddressToString,[IPAddress]$Network.Mask)
     }
     # Subtraction Method
-    static [IPv4Network]op_Subtraction([IPv4Network]$Address, [Int]$Operand) {
-        $IP = [IPv4Address]::New($Address.BroadcastAddress,$Address.MaskLength)
-        $IP = $IP - [Int]([System.Math]::Pow(2,32 - $IP.Network.MaskLength) * $Operand)
-        return [IPv4Network]::New([IPAddress]$IP.IPAddress,[IPAddress]$Address.Mask)
+    static [IPv4Network]op_Subtraction([IPv4Network]$Network, [Int]$Operand) {
+        [IPAddress]$IP = ConvertTo-DottedDecimalIP -IPAddress ((ConvertTo-DecimalIP -IPAddress $Network.NetworkAddress) - $Network.NumberOfAddresses * $Operand)
+        return [IPv4Network]::New([String]$IP.IPAddressToString,[IPAddress]$Network.Mask)
     }
 }
