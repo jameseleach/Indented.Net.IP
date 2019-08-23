@@ -1,5 +1,6 @@
 $classes = @(
-    'IPv4Classes'
+    'IPv4Address'
+    'IPv4Network'
 )
 
 foreach ($file in $classes) {
