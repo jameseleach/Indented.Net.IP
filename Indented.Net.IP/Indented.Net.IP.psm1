@@ -10,7 +10,6 @@ foreach ($file in $classes) {
 $private = @(
     'ConvertToNetwork'
     'GetPermutation'
-    'IPv4Classes'
 )
 
 foreach ($file in $private) {
